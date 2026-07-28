@@ -1,0 +1,643 @@
+html_content = """<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GEA Films — Contenido para tus departamentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,900&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14151A;
+    --ink-soft:#54565D;
+    --ivory:#FAF8F3;
+    --ivory-dim:#F0ECE1;
+    --brass:#A8853B;
+    --brass-deep:#8C6F2E;
+    --forest:#333E34;
+    --forest-soft:#4A5A4C;
+    --line:#DDD6C4;
+    --white:#FFFFFF;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--ivory);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{ color:inherit; }
+
+  .wrap{
+    max-width:960px;
+    margin:0 auto;
+    padding:0 28px;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--brass);
+  }
+
+  .eyebrow.on-forest{ color:#C9B77E; }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    margin:0;
+    font-weight:600;
+    letter-spacing:-0.01em;
+  }
+
+  /* ---------- Corner-frame signature element ---------- */
+  .frame{
+    background-image:
+      linear-gradient(var(--brass), var(--brass)), linear-gradient(var(--brass), var(--brass)),
+      linear-gradient(var(--brass), var(--brass)), linear-gradient(var(--brass), var(--brass)),
+      linear-gradient(var(--brass), var(--brass)), linear-gradient(var(--brass), var(--brass)),
+      linear-gradient(var(--brass), var(--brass)), linear-gradient(var(--brass), var(--brass));
+    background-repeat:no-repeat;
+    background-size:16px 2px, 2px 16px, 16px 2px, 2px 16px, 16px 2px, 2px 16px, 16px 2px, 2px 16px;
+    background-position:
+      top 14px left 14px, top 14px left 14px,
+      top 14px right 14px, top 14px right 14px,
+      bottom 14px left 14px, bottom 14px left 14px,
+      bottom 14px right 14px, bottom 14px right 14px;
+    transition:background-position .25s ease;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    padding:88px 0 56px;
+    border-bottom:1px solid var(--line);
+  }
+
+  .logo{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    letter-spacing:0.18em;
+    color:var(--ink);
+    margin-bottom:40px;
+  }
+
+  .logo span{ color:var(--brass); }
+
+  h1{
+    font-size:clamp(34px, 5.4vw, 56px);
+    line-height:1.08;
+    max-width:14ch;
+    margin-top:14px;
+  }
+
+  header p.lead{
+    max-width:46ch;
+    margin-top:22px;
+    font-size:17px;
+    color:var(--ink-soft);
+  }
+
+  /* ---------- Sections ---------- */
+  section{ padding:72px 0; }
+
+  .section-head{ margin-bottom:40px; max-width:56ch; }
+  .section-head h2{ font-size:clamp(26px, 3.4vw, 34px); margin-top:10px; }
+  .section-head p{ color:var(--ink-soft); margin-top:12px; font-size:15.5px; }
+
+  /* ---------- Idea cards (details/summary) ---------- */
+  .idea-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+
+  details.idea{
+    background:var(--ivory);
+    padding:30px 32px;
+  }
+
+  details.idea summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:16px;
+  }
+
+  details.idea summary::-webkit-details-marker{ display:none; }
+
+  .idea-tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--brass);
+    display:block;
+    margin-bottom:8px;
+  }
+
+  details.idea summary h3{
+    font-size:19px;
+    font-weight:600;
+  }
+
+  .plus{
+    position:relative;
+    width:14px; height:14px;
+    flex:0 0 auto;
+    margin-top:6px;
+    transition:transform .3s ease;
+  }
+  .plus::before, .plus::after{
+    content:'';
+    position:absolute;
+    background:var(--brass);
+  }
+  .plus::before{ top:50%; left:0; width:100%; height:1.6px; transform:translateY(-50%); }
+  .plus::after{ left:50%; top:0; width:1.6px; height:100%; transform:translateX(-50%); }
+  details[open] .plus{ transform:rotate(45deg); }
+
+  details.idea .idea-body{
+    margin-top:16px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:52ch;
+  }
+
+  /* ---------- LinkedIn band ---------- */
+  .band-forest{
+    background:var(--forest);
+    color:var(--ivory);
+  }
+  .band-forest .section-head p{ color:#C9CFC7; }
+
+  .li-list{ border-top:1px solid rgba(255,255,255,0.16); }
+
+  details.li-item{
+    border-bottom:1px solid rgba(255,255,255,0.16);
+    padding:24px 0;
+  }
+
+  details.li-item summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  details.li-item summary::-webkit-details-marker{ display:none; }
+
+  details.li-item summary h3{
+    font-size:18px;
+    font-weight:600;
+    color:var(--ivory);
+  }
+
+  .li-item .plus::before, .li-item .plus::after{ background:#C9B77E; }
+
+  details.li-item .li-body{
+    margin-top:14px;
+    color:#D8DCD3;
+    font-size:15px;
+    max-width:56ch;
+  }
+
+  details.li-item .li-body ul{
+    margin:10px 0 0;
+    padding-left:18px;
+  }
+  details.li-item .li-body li{ margin-bottom:6px; }
+
+  /* ---------- Pricing ---------- */
+  .price-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+  }
+
+  .pkg{
+    position:relative;
+    border:1px solid var(--line);
+    background:var(--white);
+    padding:34px 26px;
+    display:flex;
+    flex-direction:column;
+    transition:border-color .25s ease, background .25s ease;
+  }
+
+  .pkg.recommended{ background:var(--ivory-dim); }
+
+  .badge{
+    position:absolute;
+    top:-11px; left:26px;
+    background:var(--brass);
+    color:var(--white);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    padding:4px 10px;
+  }
+
+  .pkg h3{
+    font-size:20px;
+    font-weight:600;
+  }
+
+  .price{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:34px;
+    color:var(--ink);
+    margin-top:14px;
+  }
+  .price sup{ font-size:15px; color:var(--ink-soft); margin-left:4px; }
+
+  .pkg ul{
+    margin:22px 0 28px;
+    padding:0;
+    list-style:none;
+    flex:1;
+  }
+  .pkg li{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    padding:9px 0;
+    border-top:1px solid var(--line);
+  }
+  .pkg li:first-child{ border-top:none; }
+
+  .select-btn{
+    width:100%;
+    padding:13px 16px;
+    background:transparent;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .select-btn:hover{ border-color:var(--brass); color:var(--brass-deep); }
+
+  .pkg.active{ border-color:var(--brass); background:var(--white); }
+  .pkg.active .select-btn{
+    background:var(--brass);
+    border-color:var(--brass);
+    color:var(--white);
+  }
+
+  .price-note{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-soft);
+    margin-top:18px;
+  }
+
+  /* ---------- Summary bar ---------- */
+  .summary{
+    margin-top:40px;
+    border:1px solid var(--ink);
+    padding:28px 30px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    flex-wrap:wrap;
+  }
+
+  .summary .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+
+  .summary .chosen{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    margin-top:6px;
+  }
+  .summary .chosen .amount{ color:var(--brass-deep); }
+
+  .summary-actions{ display:flex; gap:10px; flex-wrap:wrap; }
+
+  .cta{
+    padding:13px 22px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    border:1px solid var(--ink);
+    background:var(--ink);
+    color:var(--ivory);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:opacity .2s ease;
+  }
+  .cta.ghost{
+    background:transparent;
+    color:var(--ink);
+  }
+  .cta[disabled], .cta.disabled{
+    opacity:0.35;
+    pointer-events:none;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:48px 0 64px;
+    border-top:1px solid var(--line);
+    text-align:center;
+  }
+  footer .logo{ justify-content:center; display:inline-block; margin-bottom:8px; }
+  footer p{ color:var(--ink-soft); font-size:13.5px; margin:0; }
+
+  :focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:3px;
+  }
+
+  @media (max-width:720px){
+    .idea-grid{ grid-template-columns:1fr; }
+    .price-grid{ grid-template-columns:1fr; }
+    header{ padding:64px 0 40px; }
+    section{ padding:56px 0; }
+    
+    /* Adaptaciones para celular vertical (menor a 720px) */
+    .summary {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+      gap: 16px;
+    }
+    .summary-actions {
+      width: 100%;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cta {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ transition:none !important; animation:none !important; scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">GEA <span>FILMS</span></div>
+    <p class="eyebrow">Propuesta de contenido</p>
+    <h1>Contenido para rentar tus departamentos</h1>
+    <p class="lead">Fotografía y video profesional para publicar en Airbnb y presentar tus departamentos a empresas que buscan alojamiento para su personal.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Ideas de contenido</p>
+      <h2>Cómo mostramos tus departamentos</h2>
+      <p>Cuatro piezas pensadas para cubrir tanto la reserva directa como la propuesta a empresas.</p>
+    </div>
+
+    <div class="idea-grid">
+
+      <details class="idea frame" open>
+        <summary>
+          <div>
+            <span class="idea-tag">Video ancla</span>
+            <h3>Tour cinematográfico completo</h3>
+          </div>
+          <span class="plus"></span>
+        </summary>
+        <div class="idea-body">Recorrido fluido desde la llegada al edificio: fachada, acceso, seguridad y pasillos, hasta el interior del departamento. Es la pieza principal que reutilizas en redes y en tus propuestas a empresas.</div>
+      </details>
+
+      <details class="idea frame">
+        <summary>
+          <div>
+            <span class="idea-tag">Para redes</span>
+            <h3>Cápsulas por amenidad</h3>
+          </div>
+          <span class="plus"></span>
+        </summary>
+        <div class="idea-body">Videos cortos verticales, uno por tema: la cocina equipada, el minisplit, la lavandería. Fáciles de consumir y pensados para Reels y TikTok.</div>
+      </details>
+
+      <details class="idea frame">
+        <summary>
+          <div>
+            <span class="idea-tag">Foto o video corto</span>
+            <h3>Comparativo sencillo vs. doble</h3>
+          </div>
+          <span class="plus"></span>
+        </summary>
+        <div class="idea-body">Una pieza que pone lado a lado los dos tipos de departamento — metros y distribución — para que el huésped o la empresa elija rápido, sin tener que preguntar.</div>
+      </details>
+
+      <details class="idea frame">
+        <summary>
+          <div>
+            <span class="idea-tag">Galería</span>
+            <h3>Fotografía de detalle</h3>
+          </div>
+          <span class="plus"></span>
+        </summary>
+        <div class="idea-body">Set de fotos individuales con buena luz de cada espacio: recámaras, cocina, baño, sala, lavandería y accesorios. Estas son las que van directo a la galería de Airbnb.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<section class="band-forest">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow on-forest">Estrategia LinkedIn — Empresas</p>
+      <h2>Cómo posicionar tus departamentos ante empresas</h2>
+      <p>La Laguna tiene fuerte presencia de manufactura y automotriz: esas plantas traen personal foráneo con frecuencia. Ese es tu público en LinkedIn.</p>
+    </div>
+
+    <div class="li-list">
+
+      <details class="li-item" open>
+        <summary>
+          <h3>Posicionamiento</h3>
+          <span class="plus"></span>
+        </summary>
+        <div class="li-body">En LinkedIn no vendas "Airbnb bonito"; vende una solución de hospedaje corporativo: privacidad, seguridad, ubicación estratégica y comodidad para personal en capacitación, auditorías, proyectos temporales o reubicación.</div>
+      </details>
+
+      <details class="li-item">
+        <summary>
+          <h3>A quién dirigirte</h3>
+          <span class="plus"></span>
+        </summary>
+        <div class="li-body">
+          Perfiles: Gerentes o Coordinadores de Recursos Humanos, Gerentes de Planta u Operaciones, Compras / Procurement.
+          <ul>
+            <li>Industrias objetivo: manufactura, automotriz, logística</li>
+            <li>Empresas con sede foránea que operan en Torreón, Gómez Palacio y Lerdo</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="li-item">
+        <summary>
+          <h3>LinkedIn Ads</h3>
+          <span class="plus"></span>
+        </summary>
+        <div class="li-body">Segmentar por cargo (RH, Gerente de Planta, Procurement) e industria (manufactura, automotriz) en un radio que incluya Torreón, Gómez Palacio y Lerdo. El video de tour cinematográfico funciona mejor que fotos sueltas como creativo de anuncio.</div>
+      </details>
+
+      <details class="li-item">
+        <summary>
+          <h3>Métrica clave</h3>
+          <span class="plus"></span>
+        </summary>
+        <div class="li-body">En B2B no midas likes: mide conversaciones iniciadas — mensajes o clics de contacto. Ese es el indicador real de que la estrategia está funcionando.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<section id="cotizaciones">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">Cotizaciones</p>
+      <h2>Elige el paquete de contenido</h2>
+      <p>Selecciona un paquete para ver el resumen.</p>
+    </div>
+
+    <div class="price-grid">
+
+      <div class="pkg frame" data-name="Esencial" data-price="2,500">
+        <h3>Esencial</h3>
+        <div class="price">$2,500<sup>MXN</sup></div>
+        <ul>
+          <li>Video del tour de los departamentos</li>
+          <li>Fotografía profesional de cada espacio</li>
+        </ul>
+        <button class="select-btn">Seleccionar paquete</button>
+      </div>
+
+      <div class="pkg frame recommended" data-name="Estándar" data-price="3,500">
+        <span class="badge">Recomendado</span>
+        <h3>Estándar</h3>
+        <div class="price">$3,500<sup>MXN</sup></div>
+        <ul>
+          <li>Video del tour de los departamentos</li>
+          <li>Fotografía profesional de cada espacio</li>
+          <li>3 cápsulas para redes</li>
+        </ul>
+        <button class="select-btn">Seleccionar paquete</button>
+      </div>
+
+      <div class="pkg frame" data-name="Completo" data-price="4,800">
+        <h3>Completo</h3>
+        <div class="price">$4,800<sup>MXN</sup></div>
+        <ul>
+          <li>Video del tour de los departamentos</li>
+          <li>Fotografía profesional de cada espacio</li>
+          <li>5 cápsulas para redes</li>
+          <li>Comparativo sencillo vs. doble</li>
+        </ul>
+        <button class="select-btn">Seleccionar paquete</button>
+      </div>
+
+    </div>
+
+    <p class="price-note">Precios en pesos mexicanos (MXN), antes de IVA.</p>
+
+    <div class="summary">
+      <div>
+        <div class="label">Paquete seleccionado</div>
+        <div class="chosen" id="chosen-text">Ninguno todavía</div>
+      </div>
+      <div class="summary-actions">
+        <button class="cta ghost disabled" id="copy-btn">Copiar resumen</button>
+        <a class="cta disabled" id="wa-btn" href="#" target="_blank" rel="noopener">Compartir por WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo">GEA <span>FILMS</span></div>
+    <p>Producción audiovisual en La Laguna — Torreón, Gómez Palacio y Lerdo.</p>
+  </div>
+</footer>
+
+<script>
+  const pkgs = document.querySelectorAll('.pkg');
+  const chosenText = document.getElementById('chosen-text');
+  const copyBtn = document.getElementById('copy-btn');
+  const waBtn = document.getElementById('wa-btn');
+
+  let selected = null;
+
+  pkgs.forEach(pkg => {
+    const btn = pkg.querySelector('.select-btn');
+    btn.addEventListener('click', () => {
+      pkgs.forEach(p => { p.classList.remove('active'); p.querySelector('.select-btn').textContent = 'Seleccionar paquete'; });
+      pkg.classList.add('active');
+      btn.textContent = 'Paquete seleccionado';
+
+      selected = { name: pkg.dataset.name, price: pkg.dataset.price };
+      chosenText.innerHTML = selected.name + ' — <span class="amount">$' + selected.price + ' MXN</span>';
+
+      copyBtn.classList.remove('disabled');
+      waBtn.classList.remove('disabled');
+
+      const msg = 'Hola, me interesa el paquete ' + selected.name + ' de contenido para mis departamentos: $' + selected.price + ' MXN. ¿Me confirmas los siguientes pasos?';
+      // URL de WhatsApp actualizada
+      waBtn.href = 'https://wa.me/18714685974?text=' + encodeURIComponent(msg);
+    });
+  });
+
+  copyBtn.addEventListener('click', () => {
+    if (!selected) return;
+    const msg = 'Paquete ' + selected.name + ' — $' + selected.price + ' MXN (GEA Films)';
+    navigator.clipboard.writeText(msg).then(() => {
+      const original = copyBtn.textContent;
+      copyBtn.textContent = 'Copiado ✓';
+      setTimeout(() => { copyBtn.textContent = original; }, 1800);
+    });
+  });
+</script>
+
+</body>
+</html>
+"""
+
+with open("index_modificado.html", "w", encoding="utf-8") as f:
+    f.write(html_content)
+    
+print("File generated successfully.")
